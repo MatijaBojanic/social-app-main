@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Get all the comments for the User
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
