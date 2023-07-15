@@ -60,4 +60,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * Get the followers of the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    /**
+     * Returns the relationship between the current model and the User model as a "belongs to many" relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function following(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
 }
