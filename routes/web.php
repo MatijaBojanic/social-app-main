@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::post('/login', [\App\Http\Controllers\AuthenticationController::class, 'login'])->name('login');
+Route::get('/logout', [\App\Http\Controllers\AuthenticationController::class, 'logout'])->name('logout');

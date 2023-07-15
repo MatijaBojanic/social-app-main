@@ -22,4 +22,11 @@ class AuthenticationController extends Controller
 
         return response()->json('success');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return response()->json('success');
+    }
 }
