@@ -17,7 +17,7 @@ class PostObserver
                 'event_type' => 'created',
                 'correlation_id' => (string)Str::uuid()
             ],
-            body: ['key' => 'value'],
+            body: $post->toArray(),
             key: (string) $post->id
         );
 

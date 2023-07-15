@@ -22,4 +22,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
     Route::get('/posts/{post}', [\App\Http\Controllers\PostController::class, 'show']);
     Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store']);
+    Route::post('/posts/{post}/comments', [\App\Http\Controllers\CommentController::class, 'store']);
+
+    Route::get('/comments/{comment}',[\App\Http\Controllers\CommentController::class, 'show']);
 });
