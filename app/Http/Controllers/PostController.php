@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -35,5 +36,26 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return $post->load('comments');
+    }
+
+    /**
+     * Store a newly created post in storage.
+     *
+     * @return Post
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|max:100',
+            'body' => 'required|max:500',
+        ]);
+
+        $post = Post::create([
+            'user_id' => auth()->user()->id,
+            'title' => $request->title,
+            'body' => $request->body,
+        ]);
+
+        return $post;
     }
 }
