@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserLoggedInEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,7 @@ class AuthenticationController extends Controller
             return redirect()->back()->with('error', 'Invalid credentials');
         }
 
+        event(new UserLoggedInEvent(auth()->user()));
         return response()->json('success');
     }
 

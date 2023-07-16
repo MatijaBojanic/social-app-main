@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\UserLoggedInEvent;
+use App\Listeners\UserLoggedInListener;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Observers\CommentObserver;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        UserLoggedInEvent::class => [
+            UserLoggedInListener::class,
         ],
     ];
 
