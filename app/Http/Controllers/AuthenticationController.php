@@ -18,10 +18,11 @@ class AuthenticationController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (! Auth::attempt($credentials)) {
-            return redirect()->back()->with('error', 'Invalid credentials');
+            logger('Failed to login?');
+            return response()->json('Invalid credentials');
         }
 
-        event(new UserLoggedInEvent(auth()->user()));
+        event(new UserLoggedInEvent(Auth::user()));
         return response()->json('success');
     }
 

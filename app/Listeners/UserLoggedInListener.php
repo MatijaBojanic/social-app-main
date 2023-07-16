@@ -15,6 +15,7 @@ class UserLoggedInListener
 
     public function handle(UserLoggedInEvent $event): void
     {
+        logger("Sending kafka login message");
         $message = new Message(
             headers: [
                 'origin' => 'main-app',
@@ -26,5 +27,6 @@ class UserLoggedInListener
         );
 
         Kafka::publishOn('users')->withMessage($message)->send();
+        logger("Sent the kafka login message");
     }
 }
