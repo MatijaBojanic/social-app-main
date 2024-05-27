@@ -31,7 +31,7 @@ return [
     ],
 
     'social-search' => [
-        'host' => env('SOCIAL_SEARCH_HOST', 'http://localhost:82'),
+        'host' => env('SOCIAL_SEARCH_HOST', 'http://social-app-deploy-elastic-service-1:80'),
     ]
 
 ];
