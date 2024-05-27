@@ -6,6 +6,7 @@ use App\Events\UserLoggedInEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticationController extends Controller
 {
