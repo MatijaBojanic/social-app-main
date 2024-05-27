@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/login', [\App\Http\Controllers\AuthenticationController::class, 'login'])->name('login');
-Route::get('/logout', [\App\Http\Controllers\AuthenticationController::class, 'logout'])->name('logout');
-Route::post('/register', [\App\Http\Controllers\AuthenticationController::class, 'register'])->name('register');
+Route::post('/login', [\App\Http\Controllers\AuthenticationController::class, 'login']);
+Route::get('/logout', [\App\Http\Controllers\AuthenticationController::class, 'logout']);
+Route::post('/register', [\App\Http\Controllers\AuthenticationController::class, 'register']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/initialize', [\App\Http\Controllers\AuthenticationController::class, 'initialize']);
+});

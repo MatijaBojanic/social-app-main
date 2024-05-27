@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    public function show(Request $request)
+    public function show(Request $request, User $user)
     {
-        $user = Auth::user();
         return response()->json($user);
     }
 }

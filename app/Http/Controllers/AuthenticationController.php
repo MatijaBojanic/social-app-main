@@ -6,7 +6,6 @@ use App\Events\UserLoggedInEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class AuthenticationController extends Controller
 {
@@ -54,5 +53,11 @@ class AuthenticationController extends Controller
         Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')]);
 
         return response()->json(['message' => 'User registered successfully.']);
+    }
+
+    public function initialize(Request $request)
+    {
+        $user = Auth::user();
+        return response()->json($user);
     }
 }
