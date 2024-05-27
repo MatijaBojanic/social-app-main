@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'social-search' => [
+        'host' => env('SOCIAL_SEARCH_HOST', 'http://localhost:82'),
+    ]
+
 ];
