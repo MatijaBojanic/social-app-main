@@ -34,7 +34,14 @@ class UsersController extends Controller
     {
         // can't follow yourself
         if ($user->id === Auth::user()->id) {
-            return response()->json(['message' => 'You cannot follow yourself.'], 400);
+            return response()->json(['message' => 'You cannot follow or unfollow yourself.'], 400);
+        }
+
+        // check if auth is following this user already, if so unfollow otherwise follow
+        if(Auth::user()->following()->find($user->id)) {
+            (Auth::user())->following()->detach($user);
+
+            return response()->json(['message' => 'You have unfollowed this user.']);
         }
 
         (Auth::user())->following()->attach($user);
