@@ -20,7 +20,10 @@ class UserObserver
                 'event_type' => 'created',
                 'correlation_id' => (string)Str::uuid()
             ],
-            body: $user->only(['name', 'email']),
+            body: [
+                "email" => $user->email,
+                "name" => $user->first_name . ' ' . $user->last_name
+            ],
             key: (string) $user->id
         );
 

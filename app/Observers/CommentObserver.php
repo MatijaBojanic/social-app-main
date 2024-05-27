@@ -11,6 +11,8 @@ class CommentObserver
 {
     public function created(Comment $comment): void
     {
+        logger("Sending kafka comment created message");
+
         $message = new Message(
             headers: [
                 'origin' => 'main-app',
@@ -22,6 +24,8 @@ class CommentObserver
         );
 
         Kafka::publishOn('comments')->withMessage($message)->send();
+
+        logger("Apperently sent the message?");
     }
 
     public function updated(Comment $comment): void
