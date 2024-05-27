@@ -29,4 +29,32 @@ class UsersController extends Controller
 
         return response()->json(json_decode($response->body()));
     }
+
+    public function follow(Request $request, User $user)
+    {
+        // can't follow yourself
+        if ($user->id === Auth::user()->id) {
+            return response()->json(['message' => 'You cannot follow yourself.'], 400);
+        }
+
+        (Auth::user())->following()->attach($user);
+
+        return response()->json(['message' => 'You are now following this user.']);
+    }
+
+    public function followers(Request $request)
+    {
+        $user = Auth::user();
+        $followers = $user->followers()->get();
+
+        return response()->json($followers);
+    }
+
+    public function following(Request $request)
+    {
+        $user = Auth::user();
+        $following = $user->following()->get();
+
+        return response()->json($following);
+    }
 }
