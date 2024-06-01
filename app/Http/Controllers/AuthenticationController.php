@@ -42,6 +42,7 @@ class AuthenticationController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email|unique:users',
+            'username' => 'required|unique:users',
             'password' => 'required|min:6'
         ]);
 
@@ -49,6 +50,7 @@ class AuthenticationController extends Controller
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
+            'username' => $request->get('username'),
             'password' => bcrypt($request->get('password'))
         ]);
 
