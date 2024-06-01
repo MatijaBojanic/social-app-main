@@ -42,7 +42,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $post->load('comments');
+        return $post->load(['user', 'comments.user']);
     }
 
     /**
