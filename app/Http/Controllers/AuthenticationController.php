@@ -26,14 +26,14 @@ class AuthenticationController extends Controller
         }
 
         event(new UserLoggedInEvent(Auth::user()));
-        return response()->json('success');
+        return response()->json(['success' => true]);
     }
 
     public function logout()
     {
         Auth::logout();
 
-        return response()->json('success');
+        return response()->json(['success' => true]);
     }
 
     public function register(Request $request)
