@@ -12,16 +12,23 @@ class PostController extends Controller
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function index()
+    public function index(Request $request)
     {
+        $this->validate($request, [
+            'page' => 'integer|min:1',
+            'per_page' => 'integer|min:1|max:100'
+        ]);
+
+
         $user = auth()->user();
-        $user_following = $user->following()->pluck('users.id');
+        $followedUsers = $user->following()->pluck('users.id');
 
-        $user_following->push($user->id);
+        $followedUsers->push($user->id);
 
-        $posts = Post::whereIn('user_id', $user_following)
+        $posts = Post::whereIn('user_id', $followedUsers)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->with(['user'])
+            ->paginate($request->per_page ?? 10, ['*'], 'page', $request->page ?? 1);
 
         return $posts;
     }
