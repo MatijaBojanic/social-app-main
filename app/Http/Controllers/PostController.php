@@ -42,8 +42,12 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $post->load(['user', 'comments.user']);
-    }
+        return $post->load([
+            'user',
+            'comments' => function ($query) {
+                $query->orderBy('created_at', 'desc')->with('user');
+            }
+        ]);    }
 
     /**
      * Store a newly created post in storage.

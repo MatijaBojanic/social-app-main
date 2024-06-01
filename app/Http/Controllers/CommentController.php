@@ -25,6 +25,6 @@ class CommentController extends Controller
             'body' => $request->body,
         ]);
 
-        return $comment;
+        return $comment->load('user');
     }
 }
