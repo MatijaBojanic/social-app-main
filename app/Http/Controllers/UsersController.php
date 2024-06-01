@@ -11,6 +11,8 @@ class UsersController extends Controller
 {
     public function show(Request $request, User $user)
     {
+        $user->isFollowing = Auth::user()->following()->find($user->id) ? true : false;
+
         return response()->json($user);
     }
 

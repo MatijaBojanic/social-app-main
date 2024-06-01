@@ -16,16 +16,20 @@ class PostController extends Controller
     {
         $this->validate($request, [
             'page' => 'integer|min:1',
-            'per_page' => 'integer|min:1|max:100'
+            'per_page' => 'integer|min:1|max:100',
+            'user_id' => 'integer|exists:users,id'
         ]);
 
+        if($request->user_id) {
+            $postOwners = collect([$request->user_id]);
+        } else {
+            $user = auth()->user();
+            $postOwners = $user->following()->pluck('users.id');
 
-        $user = auth()->user();
-        $followedUsers = $user->following()->pluck('users.id');
+            $postOwners->push($user->id);
+        }
 
-        $followedUsers->push($user->id);
-
-        $posts = Post::whereIn('user_id', $followedUsers)
+        $posts = Post::whereIn('user_id', $postOwners)
             ->orderBy('created_at', 'desc')
             ->with(['user'])
             ->paginate($request->per_page ?? 10, ['*'], 'page', $request->page ?? 1);
