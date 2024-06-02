@@ -29,9 +29,9 @@ class UsersController extends Controller
             'value' => $request->value
         ]);
 
+        $users = User::whereIn('uuid', collect(json_decode($response->body(), true))->pluck('uuid'))->get();
 
-
-        return response()->json(json_decode($response->body()));
+        return response()->json($users);
     }
 
     public function follow(Request $request, User $user)

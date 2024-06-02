@@ -22,9 +22,11 @@ class UserObserver
             ],
             body: [
                 "email" => $user->email,
-                "name" => $user->first_name . ' ' . $user->last_name
+                "name" => $user->first_name . ' ' . $user->last_name,
+                "uuid" => $user->uuid,
+                "username" => $user->username
             ],
-            key: (string) $user->id
+            key: (string) $user->uuid
         );
 
         Kafka::publishOn('users')->withMessage($message)->send();
