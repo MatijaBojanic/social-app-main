@@ -51,7 +51,8 @@ class AuthenticationController extends Controller
             'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
             'username' => $request->get('username'),
-            'password' => bcrypt($request->get('password'))
+            'password' => bcrypt($request->get('password')),
+            'uuid' => \Str::uuid()
         ]);
 
         Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')]);

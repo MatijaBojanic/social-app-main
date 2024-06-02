@@ -29,6 +29,8 @@ class UsersController extends Controller
             'value' => $request->value
         ]);
 
+
+
         return response()->json(json_decode($response->body()));
     }
 
