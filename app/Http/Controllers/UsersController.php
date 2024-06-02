@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class UsersController extends Controller
@@ -29,7 +30,12 @@ class UsersController extends Controller
             'value' => $request->value
         ]);
 
-        $users = User::whereIn('uuid', collect(json_decode($response->body(), true))->pluck('uuid'))->get();
+        $searchResult = collect(json_decode($response->body(), true));
+        $userUUIDs = $searchResult->pluck('uuid')->all();
+
+        $users = User::whereIn('uuid', $userUUIDs)
+            ->orderByRaw(DB::raw("FIELD(uuid, '" . implode("','", $userUUIDs) . "')"))
+            ->get();
 
         return response()->json($users);
     }
