@@ -19,7 +19,7 @@ class CommentObserver
                 'event_type' => 'created',
                 'correlation_id' => (string)Str::uuid()
             ],
-            body: $comment->toArray(),
+            body: $comment->load('post.user')->toArray(),
             key: (string) $comment->id
         );
 
