@@ -17,7 +17,7 @@ class PostController extends Controller
         $this->validate($request, [
             'page' => 'integer|min:1',
             'per_page' => 'integer|min:1|max:100',
-            'user_id' => 'integer|exists:users,id'
+            'user_id' => 'integer|exists:users,id',
         ]);
 
         if($request->user_id) {
@@ -63,12 +63,20 @@ class PostController extends Controller
         $this->validate($request, [
             'title' => 'required|max:100',
             'body' => 'required|max:500',
+            'image' => 'image|max:2048'
         ]);
+
+        // Handle the image upload
+        $imagePath = null;
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagePath = $request->image->store('images', 'public');
+        }
 
         $post = Post::create([
             'user_id' => auth()->user()->id,
             'title' => $request->title,
             'body' => $request->body,
+            'image_path' => $imagePath // assuming your Post model has an 'image_path' field
         ]);
 
         return $post;
